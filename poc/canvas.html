@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+</head>
+<body>
+    <canvas id="board"></canvas> 
+</body>
+<script>
+    let board = document.querySelector("#board");
+    board.height = window.innerHeight;
+    board.width = window.innerWidth;
+    let tool = board.getContext('2d');
+    
+    tool.fillStyle = 'blue'; //for filled rectangle 
+    tool.fillRect(10,10,board.width/2, board.height/2);
+    
+    
+    tool.strokeStyle ='yellow'; //for unfilled rectangle
+    tool.lineWidth = 10;
+    tool.strokeRect(40,40,board.width/2, board.height/2);
+    
+    
+</script>
+</html>
