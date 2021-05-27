@@ -15,13 +15,54 @@
     board.width = window.innerWidth;
     let tool = board.getContext('2d');
     
-    tool.fillStyle = 'blue'; //for filled rectangle 
+    
+    
+    
+    /**************Window resizing*************/
+/*    window.addEventListener('resize', function(){
+        board.height = window.innerHeight;
+        board.width = window.innerWidth;
+        draw();
+    })
+
+
+    draw();
+    function draw(){
+        tool.fillStyle = 'blue'; //for filled rectangle 
     tool.fillRect(10,10,board.width/2, board.height/2);
     
     
     tool.strokeStyle ='yellow'; //for unfilled rectangle
     tool.lineWidth = 10;
     tool.strokeRect(40,40,board.width/2, board.height/2);
+    }
+*/
+
+
+    /*****************Line draw******************/
+    tool.strokeStyle = 'yellow';
+    tool.lineWidth = 6;
+    let ismousedown = false;
+    document.body.addEventListener("mousedown", function(e){
+        let x = e.clientX;
+        let y = e.clientY;
+        ismousedown=true;
+        tool.beginPath();
+        tool.moveTo(x, y);
+    })
+    document.body.addEventListener("mousemove", function(e){
+        let x = e.clientX;
+        let y = e.clientY;
+        if(ismousedown){
+            tool.lineTo(x,y);
+            tool.stroke();
+        }
+        
+    })
+    document.body.addEventListener("mouseup", function(e){
+       ismousedown=false;
+        
+    })
     
     
 </script>
