@@ -4,13 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Canvas</title>
+    <style>
+        body {
+            margin:0;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
+    <div class="parent">
+        <div class="color red"></div>
+        <div class="color blue"></div>
+        <div class="color green"></div>
+    </div>
     <canvas id="board"></canvas> 
 </body>
 <script>
     let board = document.querySelector("#board");
+    let parent = document.querySelector(".parent");
     board.height = window.innerHeight;
     board.width = window.innerWidth;
     let tool = board.getContext('2d');
@@ -46,6 +59,7 @@
     document.body.addEventListener("mousedown", function(e){
         let x = e.clientX;
         let y = e.clientY;
+        y = getcordinates(y);
         ismousedown=true;
         tool.beginPath();
         tool.moveTo(x, y);
@@ -53,6 +67,7 @@
     document.body.addEventListener("mousemove", function(e){
         let x = e.clientX;
         let y = e.clientY;
+        y = getcordinates(y);
         if(ismousedown){
             tool.lineTo(x,y);
             tool.stroke();
@@ -63,6 +78,10 @@
        ismousedown=false;
         
     })
+    function getcordinates(y){
+        let obj = parent.getBoundingClientRect();
+        return y-obj.height;
+    }
     
     
 </script>
