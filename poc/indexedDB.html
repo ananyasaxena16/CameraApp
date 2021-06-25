@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    DB<input type="text" value='notes' id='txtDB'>
+    Version<input type="text" value='1' id='txtVersion'>
+    <button id='btnCreateDB'>Create DB</button>
+    <button id='add'>Add Notes</button>
+</body>
+<script>
+    const btnCreateDB  = document.getElementById('btnCreateDB');
+    const addButton = document.getElementById('add');
+    let db;
+    btnCreateDB.addEventListener('click',function(){
+        createDB();
+    })
+    function createDB() //creates the database
+    {
+        let dbName = document.getElementById('txtDB').value;
+        let dbVersion = document.getElementById('txtVersion').value;
+        let req = indexedDB.open(dbName,dbVersion); //request of opening
+        req.onupgradeneeded=function(e) //called when higher version of that databse is requires
+        {
+            alert('upgrade was called');
+            db =req.result;
+            db.createObjectStore('notes',{keyPath:'nId'}); //objectstore named notes created
+        }
+        req.onsuccess= function(e) //called when the version is already there
+        {
+            alert('success was called');
+            db = req.result;
+            viewNotes(); //viewing the key value pairs
+        }
+        req.onerror= function(e){ //called when lower version of that database is requires
+            alert('error was called'+" "+e.target.error);
+        }
+    }
+    addButton.addEventListener('click',function(){
+        addNote(); //adding any key value pairs to the object store
+    })
+    function addNote()
+    {
+        console.log('addd');
+        let note ={
+            nId:"abcdef",
+            txt:'My First Note'
+        }
+        let tx = db.transaction('notes','readwrite'); //transaction is actually used to create, view and delete key value pairs inside object store
+        let notesStore = tx.objectStore('notes'); //access given
+        notesStore.add(note); //added
+    }
+    function viewNotes()
+    {
+        let tx = db.transaction('notes','readonly');
+        let notes = tx.objectStore('notes');
+        let request = notes.openCursor(); //cursor is used to parse objects one by one in a very large database
+        request.onsuccess =function(e)
+        {
+            let cursor = request.result;
+            if(cursor)
+            {
+                console.log('cursor');
+                console.log(cursor.value);
+                cursor.continue(); //go to success function immediately
+            }
+        }
+    }
+</script>
+</html>
