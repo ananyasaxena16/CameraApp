@@ -91,4 +91,27 @@ video{
 {
     z-index: 5;
 }
+.zoom{
+  height:15vh;
+  width:4vw;
+  z-index:5;
+  position: fixed;
+  top:12vh;
+  right:6vh;
+
+  display: flex;
+  flex-direction: column;
+
+
+}
+.zoom button{
+  color:white;
+  background-color: #222;
+  outline:none;
+  border: none;
+  height:50%;
+  font-size: 3.5rem;
+
+
+}
 
